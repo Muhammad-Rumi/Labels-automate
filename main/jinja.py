@@ -1,11 +1,15 @@
-from docxtpl import DocxTemplate
 import pandas as pd 
-print('import successful')
-df = pd.read_csv('test.csv')
-print(df.T)
+from docxtpl import DocxTemplate
+tpl = DocxTemplate('.resources/dynamic_table_tpl.docx')
 
-# data = None
+context = {
+'col_labels' : ['fruit', 'vegetable', 'stone', 'thing'],
+'tbl_contents': [
+    {'label': 'yellow', 'cols': ['banana', 'capsicum', 'pyrite', 'taxi']},
+    {'label': 'red', 'cols': ['apple', 'tomato', 'cinnabar', 'doubledecker']},
+    {'label': 'green', 'cols': ['guava', 'cucumber', 'aventurine', 'card']},
+    ]
+}
 
-# doc = DocxTemplate('template.docx')
-# doc.render(data)
-# doc.save('test.docx')
+tpl.render(context)
+tpl.save('dynamic_table.docx')
